@@ -1,0 +1,133 @@
+@charset "UTF-8";
+.board_area .list_wrap {
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.board_area .menuList {
+	width: 49%;
+	border: 1px solid blue;
+}
+.board_area .adminList {
+	width: 49%;
+	border-top: 1px solid #175586;
+}
+.board_area .adminList th {
+	color: #ccc;
+	padding: 15px 0 15px 15px;
+	text-align: left;
+	border-bottom: 1px solid #555;
+}
+.board_area .adminList td {
+	text-align: left;
+	border-bottom: 1px solid #555;
+}
+.pop_tit {
+	position: relative;
+	width: 100%;
+	background: #175586
+}
+.pop_tit h3 {
+	padding: 20px;
+	font-size: 21px;
+	color: #aedbff;
+}
+.pop_tit .pop_close { 
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 25px;
+	color: #fff;
+}
+.pop_search {
+	width: calc(100% - 40px);
+	padding: 24px 0; 
+	border: 1px solid #15253f;
+	border-top: 1px solid #175586;
+	background: #0c1524;
+	margin: 20px auto;
+	text-align: center;
+}
+.pop_searchList {
+	width: calc(100% - 40px);
+	margin: 0 auto;
+	max-width: 700px;
+}
+.pop_searchList .thead {
+	border-top: 1px solid #175586;
+	border-bottom: 1px solid #555;
+}
+.pop_searchList th {
+	color: #ccc;
+	padding: 15px 0;
+}
+.pop_searchList .tbody tr:hover {
+	background: #101f37;
+	/* cursor: pointer; */
+}
+
+.pop_searchList .tbody td {
+	border-bottom: 1px solid #555;
+	padding: 10px 0;
+	text-align: center;
+	color:#999;
+}
+
+.pop_searchList .tbody td>a {
+	cursor: pointer;
+}
+
+.pop_searchList .tbody tr:hover td {
+	color:#ccc;
+}
+.pop_pagination {
+    padding: 20px 0 40px;
+}
+.pop_menuList {
+	width: calc(100% - 40px);
+	margin: 20px auto;
+	height: 400px;
+	overflow-y: scroll;
+	padding: 10px;
+	box-sizing: border-box;
+}
+.user_search {
+	width: 100%;
+	padding: 24px 0; 
+	border: 1px solid #15253f;
+	border-top: 1px solid #175586;
+	background: #fff;
+	margin: 0 auto;
+	text-align: center;
+}
+.board_area .user_info {
+	width: 100%;
+	border-top: 1px solid #175586;
+}
+.board_area .user_info th {
+	color: #ccc;
+	padding: 15px 0 15px 15px;
+	text-align: left;
+	border-bottom: 1px solid #555;
+}
+.board_area .user_info td {
+	text-align: left;
+	border-bottom: 1px solid #555;
+}
+
+.pilsu {
+	color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
