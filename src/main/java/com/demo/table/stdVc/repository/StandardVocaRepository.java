@@ -19,6 +19,9 @@ public interface StandardVocaRepository extends  JpaRepository<StandardVoca,Inte
     @Query(value ="select distinct std_clsf_cd from standard_voca", nativeQuery = true)
     List<String> findStdClsfCd();
 
+    @Query(value ="select * from standard_voca where std_voca_lgc_nm like %:stdVocaLgcNm% and eng_nm like %:engNm%", nativeQuery = true)
+    List<StandardVoca> findByAll(String stdVocaLgcNm, String engNm);
+
     @Query(value ="select * from standard_voca where std_clsf_cd = :stdClsfCd and std_voca_lgc_nm like %:stdVocaLgcNm% and eng_nm like %:engNm%", nativeQuery = true)
     List<StandardVoca> findBystdVocaLgcNm(String stdClsfCd, String stdVocaLgcNm, String engNm);
 }

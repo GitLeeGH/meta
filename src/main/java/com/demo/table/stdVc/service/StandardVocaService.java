@@ -23,6 +23,11 @@ public class StandardVocaService {
         return standardVocaRepository.findAll();
     }
 
+    public List<StandardVoca> findByAll(String stdVocaLgcNm, String engNm) {
+    	System.out.println("findByAll");
+        return standardVocaRepository.findByAll(stdVocaLgcNm, engNm);
+    }
+
     public List<String> findStdClsfCd() {
     	System.out.println("findStdClsfCd");
         return standardVocaRepository.findStdClsfCd();

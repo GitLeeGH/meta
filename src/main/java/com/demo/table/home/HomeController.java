@@ -17,6 +17,8 @@ public class HomeController {
         System.out.println("table");
         return "dwt/tableListManage";
     }
+    
+
 
 
 }

@@ -77,7 +77,7 @@ public class StandardVocaController {
 		// standardVoca 리스트 가져오기
 		System.out.println("hihi");
 		if(StdClsfCd.equals("all")) {
-			List<StandardVoca> standardVocaList = standardVocaService.findAll();
+			List<StandardVoca> standardVocaList = standardVocaService.findByAll(StdVocaLgcNm,EngNm);
 			Map<String, Object> contents = new HashMap<String, Object>();
 			contents.put("contents", standardVocaList);
 			return contents;
