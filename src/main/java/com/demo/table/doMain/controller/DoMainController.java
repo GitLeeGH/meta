@@ -41,6 +41,8 @@ public class DoMainController {
 
         String stdClsfCd = (String)param.get("stndAsrt");
         String dmnLnm = (String)param.get("dmnLnm");
+        String uppDmngId = (String)param.get("uppDmngId");
+        String dmngId = (String)param.get("dmngId");
 
         if(stdClsfCd.equals("all")){
             List< DoMain > doMainList = doMainService.findByAll(dmnLnm);
@@ -48,12 +50,38 @@ public class DoMainController {
             contents.put("contents", doMainList);
             return contents;
         }else{
-            List< DoMain > doMainList = doMainService.findByOption(stdClsfCd, dmnLnm);
+            List< DoMain > doMainList = doMainService.findByOption(stdClsfCd, dmnLnm, uppDmngId, dmngId);
             Map<String, Object> contents = new HashMap<String, Object>();
             contents.put("contents", doMainList);
             return contents;
         }
 
+    }
+
+    // 분류에 따른 그룹타입 가져오기
+    @RequestMapping("/domn/getGropupType")
+    public @ResponseBody Map<String, Object> getGropupType(@RequestBody Map<String, Object> param) {
+        System.out.println("getInfoType");
+        System.out.println(param);
+        String stdClsfCd = (String)param.get("stndAsrt");
+        List<String> infoTypeList = doMainService.findGroupType(stdClsfCd);
+        System.out.println(infoTypeList);
+        Map<String, Object> contents = new HashMap<String, Object>();
+        contents.put("contents", infoTypeList);
+        return contents;
+    }
+
+    //도메인그룹 코드에 다른 인포타입 가져오기
+    @RequestMapping("/domn/getInfoType")
+    public @ResponseBody Map<String, Object> getInfoType(@RequestBody Map<String, Object> param) {
+        System.out.println("getInfoType");
+        System.out.println(param);
+        String uppDmngId = (String)param.get("uppDmngId");
+        List<String> infoTypeList = doMainService.findInfoType(uppDmngId);
+        System.out.println(infoTypeList);
+        Map<String, Object> contents = new HashMap<String, Object>();
+        contents.put("contents", infoTypeList);
+        return contents;
     }
 
 }

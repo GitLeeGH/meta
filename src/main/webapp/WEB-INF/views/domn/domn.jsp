@@ -52,7 +52,16 @@
 	                </td>
 	                <th scope="row"><label for="infotpId">도메인그룹/인포타입</label></th><!-- 도메인그룹/인포타입 -->
 	                <td>
-	                    <div id="selectBoxDiv"> <span></span><select id="uppDmngId" class="wd30p" name="uppDmngId"><option value="">전체</option></select><select id="dmngId" class="wd30p" name="dmngId"><option value="">전체</option></select><select id="infotpId" class="wd30p" name="infotpId"><option value="">전체</option></select></div>
+	                    <div id="selectBoxDiv"> <span></span>
+                            <select id="uppDmngId" class="wd30p" name="uppDmngId">
+                                <option value="">전체</option>
+                            </select>
+                            <select id="dmngId" class="wd30p" name="dmngId">
+                                <option value="">전체</option></select>
+                            <select id="infotpId" class="wd30p" name="infotpId">
+                                <option value="">전체</option>
+                            </select>
+	                    </div>
 	
 	                </td>
 	                <th scope="row"><label for="dmnLnm">도메인명</label></th> <!-- 도메인명 -->
@@ -353,7 +362,7 @@
     const data = {};
     // 문서가 준비되면
     document.addEventListener("DOMContentLoaded", function(){
-            // 그리드 객체 생성
+        // 그리드 객체 생성
 	    grid = new tui.Grid({
 	        el: document.getElementById('grid'), // Container element
 	        scrollX : false,
@@ -396,7 +405,6 @@
 	        document.getElementById("stndAsrtstndAsrtInput").value = grid.getRow(rowKey).stdClsfCd;
 	        console.log("표준분류:", grid.getRow(rowKey).stdClsfCd);
 
-
 	        document.getElementById("stwdLnmInput").value = grid.getRow(rowKey).stdVocaLgcNm;
 	        document.getElementById("stwdPnmInput").value = grid.getRow(rowKey).stdVocaPhysNm;
 	        document.getElementById("engMeanInput").value = grid.getRow(rowKey).engNm;
@@ -410,12 +418,7 @@
 	        document.getElementById("aprvDtm").value = grid.getRow(rowKey).aprvDt;
 	        document.getElementById("aprvUserNm").value = grid.getRow(rowKey).autzrNm;
 
-
-
-
         });
-
-
         // 표준분류 코드 가져오기
         getStdClsfCd();
 
@@ -452,6 +455,11 @@
     	        $("#stndAsrt").append("<option value='"+result.contents[i]+"'>"+result.contents[i]+"</option>");
     	    }
 
+    	    // uppDmngId 셀렉트 박스에 추가
+    	    for(let i=0; i<result.contents.length; i++){
+    	        $("#uppDmngId").append("<option value='"+result.contents[i]+"'>"+result.contents[i]+"</option>");
+    	    }
+
     	  } catch (error) {
     	    console.error("실패:", error);
     	  }
@@ -467,11 +475,15 @@
         // 도메인명
         const dmnLnm = document.getElementById("dmnLnm").value;
         console.log("도메인명:", dmnLnm);
+        // 도메인그룹 코드
+        const uppDmngId = document.getElementById("dmngId").value;
+        console.log("도메인그룹 코드:", uppDmngId);
+        // 인포타입 코드
+        let dmngId = document.getElementById("infotpId").value;
+        // dmgIn 부산형데이터> 삭제
+        console.log("인포타입 코드:", dmngId);
 
-
-
-
-        // 조회 요청
+      // 조회 요청
         try{
             const response = await fetch("<c:url value='/domn/doMainList'/>", {
                 method: "POST", // 또는 'PUT'
@@ -480,7 +492,10 @@
                 },
                 body: JSON.stringify({
                     stndAsrt: stndAsrt,
-                    dmnLnm: dmnLnm
+                    dmnLnm: dmnLnm,
+                    uppDmngId: uppDmngId,
+                    dmngId: dmngId
+
                 })
             });
 
@@ -492,8 +507,74 @@
         }catch(error){
             console.error("실패:", error);
         }
+    });
 
+    // uppDmngId 셀렉트 박스 변경 이벤트
+    document.getElementById("uppDmngId").addEventListener("change", async function(){
+        console.log("도메인그룹 변경");
+        // 도메인그룹 코드
+        const uppDmngId = document.getElementById("uppDmngId").value;
+        console.log("도메인그룹 코드:", uppDmngId);
+        // 분류에 따른 그룹타입 가져오기
+        try{
+            const response = await fetch("<c:url value='/domn/getGropupType'/>", {
+                method: "POST", // 또는 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    stndAsrt: uppDmngId
+                })
+            });
 
+            const result = await response.json();
+            console.log("성공:", result);
+            // 인포타입 셀렉트 박스 초기화
+            $("#dmngId").empty();
+            document.getElementById("dmngId").innerHTML = "<option value=''>전체</option>";
+            // dmngId 셀렉트 박스에 추가
+            for(let i=0; i<result.contents.length; i++){
+                $("#dmngId").append("<option value='"+result.contents[i]+"'>"+result.contents[i]+"</option>");
+            }
+
+        }catch(error){
+            console.error("실패:", error);
+        }
+    });
+
+    // dmngId 셀렉트 박스 변경 이벤트
+    document.getElementById("dmngId").addEventListener("change", async function(){
+        console.log("인포타입 변경");
+        // 인포타입 코드
+        let dmngId = document.getElementById("dmngId").value;
+        // dmgIn 부산형데이터> 삭제
+        dmngId = dmngId.replace("부산형데이터>", "");
+        console.log("인포타입 코드:", dmngId);
+        // 도메인그룹 코드에 따른 인포타입 가져오기
+        try{
+            const response = await fetch("<c:url value='/domn/getInfoType'/>", {
+                method: "POST", // 또는 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    uppDmngId: dmngId
+                })
+            });
+
+            const result = await response.json();
+            console.log("성공:", result);
+            // 인포타입 셀렉트 박스 초기화
+            $("#infotpId").empty();
+            document.getElementById("infotpId").innerHTML = "<option value=''>전체</option>";
+            // infotpId 셀렉트 박스에 추가
+            for(let i=0; i<result.contents.length; i++){
+                $("#infotpId").append("<option value='"+result.contents[i]+"'>"+result.contents[i]+"</option>");
+            }
+
+        }catch(error){
+            console.error("실패:", error);
+        }
     });
 
 

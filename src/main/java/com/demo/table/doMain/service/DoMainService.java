@@ -23,8 +23,18 @@ public class DoMainService {
         return doMainRepository.findByAll(dmnLnm);
     }
 
-    public List<DoMain> findByOption(String stdClsfCd, String dmnLnm) {
+    public List<DoMain> findByOption(String stdClsfCd, String dmnLnm, String uppDmngId, String dmngId) {
         System.out.println("findByOption");
-        return doMainRepository.findByOption(stdClsfCd, dmnLnm);
+        return doMainRepository.findByOption(stdClsfCd, dmnLnm, uppDmngId, dmngId);
+    }
+
+    public List<String> findGroupType(String stdClsfCd) {
+        System.out.println("findGroupType");
+        return doMainRepository.findGroupType(stdClsfCd);
+    }
+
+    public List<String> findInfoType(String uppDmngId) {
+        System.out.println("findInfoType");
+        return doMainRepository.findInfoType(uppDmngId);
     }
 }
